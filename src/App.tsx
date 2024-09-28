@@ -62,10 +62,10 @@ function Video(props: VideoProps) {
     );
 }
 
-function withPopularity(WrappedComponent: React.ComponentType<any>) {
-    return function EnhancedComponent(props: any) {
+function withPopularity<T extends VideoProps | ArticleProps>(WrappedComponent: React.ComponentType<T>) {
+    return function EnhancedComponent(props: T) {
         const { views } = props;
-        let Wrapper: React.ComponentType<any> | null = null;
+        let Wrapper: React.ComponentType<PopularProps | NewProps> | null = null;
 
         if (views >= 1000) {
             Wrapper = Popular;
