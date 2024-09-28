@@ -106,7 +106,7 @@ function List(props: { list: ListItem[] }) {
 }
 
 export default function App() {
-    const [list, setList] = useState<ListItem[]>([
+    const [list] = useState<ListItem[]>([
         {
             type: 'video',
             url: 'https://www.youtube.com/embed/rN6nlNC9WQA?rel=0&amp;controls=0&amp;showinfo=0',
