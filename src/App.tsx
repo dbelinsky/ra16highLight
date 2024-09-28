@@ -1,7 +1,33 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.css'; 
 
-function New(props) {
+interface NewProps {
+    children: React.ReactNode;
+}
+
+interface PopularProps {
+    children: React.ReactNode;
+}
+
+interface ArticleProps {
+    title: string;
+    views: number;
+}
+
+interface VideoProps {
+    url: string;
+    views: number;
+}
+
+interface ListItem {
+    type: 'video' | 'article';
+    url?: string;
+    title?: string;
+    views: number;
+}
+
+// New component
+function New(props: NewProps) {
     return (
         <div className="wrap-item wrap-item-new">
             <span className="label">New!</span>
@@ -10,7 +36,8 @@ function New(props) {
     );
 }
 
-function Popular(props) {
+// Popular component
+function Popular(props: PopularProps) {
     return (
         <div className="wrap-item wrap-item-popular">
             <span className="label">Popular!</span>
@@ -19,7 +46,8 @@ function Popular(props) {
     );
 }
 
-function Article(props) {
+// Article component
+function Article(props: ArticleProps) {
     return (
         <div className="item item-article">
             <h3><a href="#">{props.title}</a></h3>
@@ -28,7 +56,8 @@ function Article(props) {
     );
 }
 
-function Video(props) {
+// Video component
+function Video(props: VideoProps) {
     return (
         <div className="item item-video">
             <iframe src={props.url} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
@@ -37,10 +66,11 @@ function Video(props) {
     );
 }
 
-function withPopularity(WrappedComponent) {
-    return function EnhancedComponent(props) {
+// Higher-Order Component to wrap Video and Article
+function withPopularity(WrappedComponent: React.ComponentType<any>) {
+    return function EnhancedComponent(props: any) {
         const { views } = props;
-        let Wrapper = null;
+        let Wrapper: React.ComponentType<any> | null = null;
 
         if (views >= 1000) {
             Wrapper = Popular;
@@ -60,10 +90,12 @@ function withPopularity(WrappedComponent) {
     };
 }
 
+// Enhance Video and Article components
 const EnhancedVideo = withPopularity(Video);
 const EnhancedArticle = withPopularity(Article);
 
-function List(props) {
+// List component
+function List(props: { list: ListItem[] }) {
     return props.list.map((item, index) => {
         switch (item.type) {
             case 'video':
@@ -80,8 +112,9 @@ function List(props) {
     });
 }
 
+// Main App component
 export default function App() {
-    const [list, setList] = useState([
+    const [list, setList] = useState<ListItem[]>([
         {
             type: 'video',
             url: 'https://www.youtube.com/embed/rN6nlNC9WQA?rel=0&amp;controls=0&amp;showinfo=0',
