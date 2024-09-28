@@ -139,15 +139,6 @@ export default function App() {
         },
     ]);
 
-    const addNewItem = () => {
-        const newItem = {
-            type: 'article',
-            title: 'New Article Title',
-            views: 0
-        };
-        setList(prevList => [...prevList, newItem]);
-    };
-
     return (
             <List list={list} />
     );
