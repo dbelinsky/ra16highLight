@@ -26,7 +26,6 @@ interface ListItem {
     views: number;
 }
 
-// New component
 function New(props: NewProps) {
     return (
         <div className="wrap-item wrap-item-new">
@@ -36,7 +35,6 @@ function New(props: NewProps) {
     );
 }
 
-// Popular component
 function Popular(props: PopularProps) {
     return (
         <div className="wrap-item wrap-item-popular">
@@ -46,7 +44,6 @@ function Popular(props: PopularProps) {
     );
 }
 
-// Article component
 function Article(props: ArticleProps) {
     return (
         <div className="item item-article">
@@ -56,7 +53,6 @@ function Article(props: ArticleProps) {
     );
 }
 
-// Video component
 function Video(props: VideoProps) {
     return (
         <div className="item item-video">
@@ -66,7 +62,6 @@ function Video(props: VideoProps) {
     );
 }
 
-// Higher-Order Component to wrap Video and Article
 function withPopularity(WrappedComponent: React.ComponentType<any>) {
     return function EnhancedComponent(props: any) {
         const { views } = props;
@@ -90,11 +85,9 @@ function withPopularity(WrappedComponent: React.ComponentType<any>) {
     };
 }
 
-// Enhance Video and Article components
 const EnhancedVideo = withPopularity(Video);
 const EnhancedArticle = withPopularity(Article);
 
-// List component
 function List(props: { list: ListItem[] }) {
     return props.list.map((item, index) => {
         switch (item.type) {
@@ -112,7 +105,6 @@ function List(props: { list: ListItem[] }) {
     });
 }
 
-// Main App component
 export default function App() {
     const [list, setList] = useState<ListItem[]>([
         {
@@ -146,7 +138,17 @@ export default function App() {
             views: 12,
         },
     ]);
+
+    const addNewItem = () => {
+        const newItem = {
+            type: 'article',
+            title: 'New Article Title',
+            views: 0
+        };
+        setList(prevList => [...prevList, newItem]);
+    };
+
     return (
-        <List list={list} />
+            <List list={list} />
     );
 }
