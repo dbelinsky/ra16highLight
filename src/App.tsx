@@ -92,13 +92,19 @@ function List(props: { list: ListItem[] }) {
     return props.list.map((item, index) => {
         switch (item.type) {
             case 'video':
-                return (
-                    <EnhancedVideo key={index} {...item} />
-                );
+                if (item.url) {
+                    return (
+                        <EnhancedVideo key={index} {...(item as VideoProps)} />
+                    );
+                }
+                return null;
             case 'article':
-                return (
-                    <EnhancedArticle key={index} {...item} />
-                );
+                if (item.title) {
+                    return (
+                        <EnhancedArticle key={index} {...(item as ArticleProps)} />
+                    );
+                }
+                return null;
             default:
                 return null;
         }
